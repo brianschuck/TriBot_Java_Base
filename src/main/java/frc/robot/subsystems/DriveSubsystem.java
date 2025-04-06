@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 import frc.robot.Constants.DriveConstants;
-//import frc.robot.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -18,20 +17,22 @@ public class DriveSubsystem  extends SubsystemBase {
 
   public DriveSubsystem() {}
 
-
   public Command IMUgetHeadingMethodCommand() {
     return runOnce(() -> {
-      IMU.getFusedHeading();
+      IMU.getYaw();
     });
   }
 
   public Command IMUzeroHeading() {
     return runOnce(() -> {
-      IMU.setFusedHeading(0.0);
+      //IMU.setFusedHeading(0.0);
+      System.out.println("IMU Yaw: ");
+      System.out.print(IMU.getYaw());
+      IMU.setYaw(0.0);
     });
   }
 
-public void Drive(double x,double y,double r){
+  public void Drive(double x,double y,double r, boolean fieldOrient){
 
     x = exponential_drive(x, DriveConstants.kDriveExponetialConstant);
     y = exponential_drive(y, DriveConstants.kDriveExponetialConstant);
@@ -40,17 +41,15 @@ public void Drive(double x,double y,double r){
     x = apply_deadband(x, DriveConstants.kDriveDeadbandXYConstant, DriveConstants.kDriveMaxXYConstant);
     y = apply_deadband(y, DriveConstants.kDriveDeadbandXYConstant, DriveConstants.kDriveMaxXYConstant);
     r = apply_deadband(r, DriveConstants.kDriveDeadbandRConstant, DriveConstants.kDriveMaxRConstant);
-    
-  
-    double heading = IMU.getFusedHeading();
-  
-    //if(fieldOrient){    //calculate and apply field orientation
+      
+    double heading = IMU.getYaw();
+    if(fieldOrient){
       double theta = heading * Math.PI/180;  //convert heading degrees to radians
       double yOut = x * Math.sin(theta) + y * Math.cos(theta);
       double xOut = x * Math.cos(theta) - y * Math.sin(theta);
       y = yOut;
       x = xOut;
-    //}
+    }
   
     double right_Wheel = -0.5 * x - Math.sqrt(3)/2 * y + r;  //calculate 3 wheel holonomic
     double left_Wheel = -0.5 * x + Math.sqrt(3)/2 * y + r;
