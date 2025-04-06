@@ -15,7 +15,7 @@ public final class Constants {
       public static final double kRotExponetialConstant = 2.0;
   
       public static final double kDriveMaxXYConstant = 0.55;
-      public static final double kDriveMaxRConstant = 0.45;
+      public static final double kDriveMaxRConstant = 0.35;
   
   
       public static final double kDriveDeadbandXYConstant = 0.05;
