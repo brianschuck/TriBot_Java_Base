@@ -22,4 +22,10 @@ public final class Constants {
       public static final double kDriveDeadbandRConstant = 0.05;
       
     }
+
+    public static class ledConstants {
+      public static final int kPort = 0;
+      public static final int kLength = 36;
+      
+    }
 }

@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-//import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -26,8 +25,8 @@ public class DriveSubsystem  extends SubsystemBase {
   public Command IMUzeroHeading() {
     return runOnce(() -> {
       //IMU.setFusedHeading(0.0);
-      System.out.println("IMU Yaw: ");
-      System.out.print(IMU.getYaw());
+      //System.out.println("IMU Yaw: ");
+      //System.out.print(IMU.getYaw());
       IMU.setYaw(0.0);
     });
   }
