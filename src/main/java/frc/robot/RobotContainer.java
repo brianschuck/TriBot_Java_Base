@@ -28,7 +28,7 @@ public class RobotContainer {
 
     m_driveSubsystem.setDefaultCommand(
       new RunCommand(() ->
-        m_driveSubsystem.Drive(
+        m_driveSubsystem.buttonRotateToTarget(
           m_driverController.getLeftY(), 
           -m_driverController.getLeftX(), 
           m_driverController.getRightX(),
@@ -43,7 +43,7 @@ public class RobotContainer {
 
     m_led.setDefaultCommand(
       new RunCommand(() ->
-        m_led.CameraTargetLED(m_photon.cameraTargetValues()),
+        m_led.CameraTargetLED(m_photon.cameraTargetValues(1)),
         m_led
       ));
     
@@ -55,6 +55,11 @@ public class RobotContainer {
     m_driverController.leftBumper().onTrue(m_driveSubsystem.IMUzeroHeading());
     m_driverController.a().whileTrue(m_led.blinkLED(Color.kGreen));
     m_driverController.x().whileTrue(m_led.TwoLEDColor(Color.kRed, Color.kBlue));
+
+
+    m_driverController.b().whileTrue( 
+      new RunCommand(() -> m_driveSubsystem.Drive(0, 0, m_photon.getTargetYaw(), false)));
+
   }
 
   public Command getAutonomousCommand() {

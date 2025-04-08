@@ -27,22 +27,53 @@ public Command SetPipelineIndexCommand() {
 }
 
 
-  public double cameraTargetValues(){
+  public double cameraTargetValues(double id){
     PhotonPipelineResult result = camera1.getLatestResult();
     double targetVal = 0;
-       if (result.hasTargets()) {
-          PhotonTrackedTarget target = result.getBestTarget(); 
-          //if (target.GetFiducialId() == 1)  {   //only if we want a specific ID
+      if (result.hasTargets()){
+          PhotonTrackedTarget target = result.getBestTarget();
+          if ( id > 0){  // Above zero we want a specific fiducial ID
+            if (target.getFiducialId() == id){
+              targetVal = target.getYaw();
+            }
+            else{
+              targetVal = 998; //Wrong ID. Send 999 to be interpreted as the wrong target
+            }
+          }
+          else{    // We will take any best available
             targetVal = target.getYaw();
-          //}
-        }
-        else{
-          targetVal = 100.0;  //return 100 when no target found
-        }
+          }
+      }
+      else{
+        targetVal = 999;  //return 998 when no target found
+      }
+      return targetVal;
+  }
+
+  public double getTargetYaw(){
+    PhotonPipelineResult result = camera1.getLatestResult();
+    double targetVal = 0;
+      if (result.hasTargets()){
+        PhotonTrackedTarget target = result.getBestTarget();
+        targetVal = target.getYaw();
+       }
+      else{
+        targetVal = 999;  //return 999 when no target found
+      }
     return targetVal;
   }
 
+  public double getTargetPose(){
+    //PhotonPipelineResult result = camera1.getLatestResult();
+    double targetVal = 0;
+      return targetVal;
+  }
 
+  public double getDistanceToTarget(){
+        //PhotonPipelineResult result = camera1.getLatestResult();
+    double targetVal = 0;
+      return targetVal;
+  }
 
 
 void Periodic() {

@@ -57,22 +57,27 @@ public class ledSubsystem extends SubsystemBase{
 
   public Command CameraTargetLED(double targetValue){
     int bufferSize = m_ledBuffer.getLength();
-    if(targetValue != 101.0){
-      if(targetValue < 100.0){  // 999 is returned if there is no valid target detected from the camera
-          long targetValInt = Math.round(targetValue); //round the double to the nearest INT 
-            targetValInt += 18;  // Only using 36 LEDs
+    if(targetValue < 999 ){ 
+      if(targetValue < 998){  // 999 is returned if there is no valid target detected from the camera
+        long targetValInt = Math.round(targetValue); //round the double to the nearest INT 
+        targetValInt += 18;  // Only using 36 LEDs
         for(int i = 0; i < bufferSize; i++){
           if(targetValInt == i){
-            m_ledBuffer.setRGB(i ,0, 255, 0);  //set the led green if its array value matches the target
+            m_ledBuffer.setLED(i , Color.kGreen);  //set the led green if its array value matches the target
           }
           else
-          m_ledBuffer.setRGB(i, 0, 0, 0);   //set the rest to off
+          m_ledBuffer.setLED(i, Color.kBlack);   //set the rest to off
         }
       }
       else{     //target not valid
         for(int i = 0; i < bufferSize; i++){
-          m_ledBuffer.setRGB(i, 25, 0, 0);   //set all to red
+          m_ledBuffer.setLED(i, Color.kDarkOrange);   //set all to orange
         }
+      }
+    }
+    else{
+      for(int i = 0; i < bufferSize; i++){
+        m_ledBuffer.setLED(i, Color.kBlack);
       }
     }
     return run(() -> m_led.setData(m_ledBuffer)
