@@ -15,12 +15,15 @@ public final class Constants {
       public static final double kRotExponetialConstant = 2.0;
   
       public static final double kDriveMaxXYConstant = 0.55;
-      public static final double kDriveMaxRConstant = 0.35;
-  
-  
+      public static final double kDriveMaxRConstant = 0.2;
+    
       public static final double kDriveDeadbandXYConstant = 0.05;
       public static final double kDriveDeadbandRConstant = 0.05;
-      
+
+      public static final double kPDriveRotPIDConstant = 0.0042;
+      public static final double kIDriveRotPIDConstant = 0.000;
+      public static final double kDDriveRotPIDConstant = 0.00045;
+     
     }
 
     public static class ledConstants {

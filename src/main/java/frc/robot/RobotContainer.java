@@ -28,7 +28,7 @@ public class RobotContainer {
 
     m_driveSubsystem.setDefaultCommand(
       new RunCommand(() ->
-        m_driveSubsystem.buttonRotateToTarget(
+        m_driveSubsystem.Drive(
           m_driverController.getLeftY(), 
           -m_driverController.getLeftX(), 
           m_driverController.getRightX(),
@@ -58,8 +58,13 @@ public class RobotContainer {
 
 
     m_driverController.b().whileTrue( 
-      new RunCommand(() -> m_driveSubsystem.Drive(0, 0, m_photon.getTargetYaw(), false)));
-
+      new RunCommand(() -> m_driveSubsystem.buttonRotateToTarget(
+        m_driverController.getLeftY(), 
+        -m_driverController.getLeftX(), 
+        m_photon.getTargetYaw(),
+        false
+      )
+      ));
   }
 
   public Command getAutonomousCommand() {
